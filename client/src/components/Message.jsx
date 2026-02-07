@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Chatbox = () => {
+const Sidebar = () => {
   return (
     <div>
-      
+      Message
     </div>
   )
 }
 
-export default Chatbox
+export default Sidebar
