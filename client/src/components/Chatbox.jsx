@@ -11,6 +11,14 @@ const Chatbox = () => {
 
   const [loading, setLoading] = useState(false)
 
+  const [prompt, setPrompt] = useState('')
+  const [mode, setMode] = useState('text')
+  const[isPublished, setIsPublished] = useState(false)
+
+  const onSubmit = async (e) => {
+    e.preventDefault()
+  }
+
   useEffect(()=>{
     if(selectedChat){
         setMessages(selectedChat.messages)
@@ -30,11 +38,30 @@ const Chatbox = () => {
 
         {messages.map((message, index)=> <Message key={index} message={message}/>)}
 
+        {/* Three dots loading */}
+        {
+            loading && <div className='loader flex items-center gap-1.5'>
+                <div className='w-1.5 h-1.5 rounded-full bg-gray-500 dark:bg-white animate-bounce'></div>
+                <div className='w-1.5 h-1.5 rounded-full bg-gray-500 dark:bg-white animate-bounce'></div>
+                <div className='w-1.5 h-1.5 rounded-full bg-gray-500 dark:bg-white animate-bounce'></div>
+        </div>
+        }
+
 
       </div>
 
         {/* Prompt Input Box */}
-        <form action=""></form>
+        <form onSubmit={onSubmit} className='bg-primary/20 dark:bg-[#583C79]/30 border border-primary dark:border-[#80609F]/30
+        rounded-full w-full max-w-2xl p-3 pl-4 mx-auto flex gap-4 items-center'>
+            <select onChange={(e)=>setMode(e.target.value)} value={mode} className='text-sm pl-3 pr-2 outline-none'>
+                <option className='dark:bg-purple-900' value="text">Text</option>
+                <option className='dark:bg-purple-900' value="image">Image</option>
+            </select>
+            <input onChange={(e)=> setPrompt(e.target.value)} value={prompt} type="text" placeholder="Type your prompt here... " className='flex-1 w-full text-sm outline-none' required/>
+            <button disabled={loading}>
+                <img src={loading ? assets.stop_icon._icon : assets.send_icon} className='w-8 cursor-pointer' alt="" />
+            </button>
+        </form>
 
     </div>
   )
